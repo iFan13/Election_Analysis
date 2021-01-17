@@ -83,6 +83,8 @@ with open(file_to_load) as election_data:
         candidate_name = row[2]
         # tally vote by county name and candidate
         candidate_votes[candidate_name][county_name]+=1
+        votes[county_name]+=1
+        votes[candidate_name]+=1
         
 # Save the results to our text file.
 with open(file_to_save, "w") as txt_file:
@@ -97,12 +99,9 @@ with open(file_to_save, "w") as txt_file:
     print(election_results, end="")
 
     txt_file.write(election_results)
-   
-    # for loop to sum county votes.
-    for county in counties:
-        for candidate in candidate_options:
-            votes[county] += candidate_votes[candidate].get(county)
     
+    for county in counties:
+
         # Calculate the percentage of votes for the county.
         vote_percentage = float(votes[county])/float(total_votes)*100
         county_results = (
@@ -123,27 +122,28 @@ with open(file_to_save, "w") as txt_file:
             f"\n-------------------------\n"
             f"Largest County Turnout: {largest_county}\n"
             f"-------------------------\n"
-        )        
-
+        )
+        
     # 7: Print the county with the largest turnout to the terminal.
     print(largest_county_summary)
-    
-    # 8: Save the county with the largest turnout to a text file.
-    txt_file.write(largest_county_summary)
-    
 
-    # Save the final candidate vote count to the text file.
+    # 8: Save the county with the largest turnout to a text file.
+    txt_file.write(largest_county_summary)       
+
+
+    # candidate breakdown
     for candidate in candidate_options:
         candidate_breakdown = ""
+        
         for county in counties:
-            votes[candidate] += candidate_votes[candidate].get(county)
             candidate_by_county_perc = float(candidate_votes[candidate].get(county)/float(votes[county]))*100
-            candidate_breakdown = (candidate_breakdown + f"\n       {county}- {candidate_votes[candidate].get(county):,}, {candidate_by_county_perc:.2f}% of county; ")
+            perc_of_votes_rec = (float(candidate_votes[candidate].get(county))/float(votes[candidate]))*100
+            candidate_breakdown = (candidate_breakdown + f"\n       {county}- {candidate_votes[candidate].get(county):,}, {candidate_by_county_perc:.2f}% of county; {perc_of_votes_rec:.2f}% of votes received")
             
             vote_percentage = float(votes[candidate]) / float(total_votes) * 100
             candidate_results = (
                 f"{candidate}: {vote_percentage:.1f}% total ({votes[candidate]:,} total){candidate_breakdown}\n")
-
+        
         # Print each candidate's voter count and percentage to the terminal.
         print(candidate_results)
             
