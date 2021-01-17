@@ -1,6 +1,6 @@
 # Election_Analysis
 
-### Project Overview
+## Project Overview
 Tom and Seth of the Colorado Board of Elections has given the following tasks to be completed for an election audit of a recent local congressional election.
 
 1. Calculate the total number of votes cast.
@@ -11,7 +11,7 @@ Tom and Seth of the Colorado Board of Elections has given the following tasks to
 6. Calculate the percentage of votes each candidate won.
 7. Determine the winner of the election via popular vote.
 
-### Resources
+## Resources
 
 - Data source: election_results.csv
 - Software: Python 3.9.1, Visual Studio code 1.52.1
@@ -30,9 +30,11 @@ The analysis of the election show that
   - Charles Casper Stockham receiving 23.0% of the vote and 85,213 number of votes.
   - Diana DeGette receiving 73.8% of the vote and 272,892 number of votes.
   - Raymon Anthony Doane receiving 3.1% of the vote and 11,606 number of votes.
-- The winner of the election was: 
+- The winner of the election was:
   - Diana DeGette, who received 272,892 number of votes and had a winning 73.8% of votes.
+
+Results are also downloadable [here](/analysis/election_analysis.txt)
 
 ## Election-Audit Summary
 
-The python script attached [here](/PyPoll_Challenge.py) could potentially be further modified depending on the data sets provided. In the above for [this dataset](/Resources/election_results.csv), county, candidate are tabulated separately. However, it is possible to delve into greater detail and granularity to count for votes for specific candidates within a county (ie: what is the split of votes in each county for each candidate). This can be done using an dictionary within a dictionary. Conversely, it would also be possible to tabulate popularity of the candidate within a specific county (ie: which candidate won in each county).
+The python script attached [here](/PyPoll_Challenge.py) could potentially be further modified depending on the data sets provided. In the above for [this dataset](/Resources/election_results.csv), county, candidate are tabulated separately. However, it is possible to delve into greater detail and granularity to count for votes for specific candidates within a county (ie: what is the split of votes in each county for each candidate). This can be done using an dictionary within a dictionary. Conversely, it would also be possible to tabulate popularity of the candidate within a specific county (ie: which candidate won in each county). An example of the script and results for tabulating specific votes within each county per candidate can be found within this respository. [Script](/PyPoll_Challenge_Detail_breakdown.py) and [sample result](/analysis/election_analysis_detailed.txt)
