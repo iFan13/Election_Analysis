@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """PyPoll Homework Challenge Solution."""
+"""Detail breakdown"""
 
 # Add our dependencies.
 import csv
@@ -18,10 +19,8 @@ total_votes = 0
 candidate_options = []
 candidate_votes = {}
 
-
 # 1: Create a county list and county votes dictionary.
 counties = []
-counties_dict = {}
 county_votes={}
 
 # create dictionary for summation
@@ -47,32 +46,48 @@ with open(file_to_load) as election_data:
     # For each row in the CSV file.
     for row in reader:
 
-        # Extract the county name & candidate name from each row.
-        county_name = row[1]
+        # Extract the candidate name from each row.
         candidate_name = row[2]
+        
+        # 3: Extract the county name from each row.
+        county_name = row[1]
+        
         # tally total votes
         total_votes += 1
 
-        # create the list of counties
-        if county_name not in counties:
-            counties.append(county_name)
-        
-        # Create the list of candidates
+        # If the candidate does not match any existing candidate add it to the candidate list
         if candidate_name not in candidate_options:
+            # Add the candidate name to the candidate list.
             candidate_options.append(candidate_name)
+            # And begin tracking that candidate's voter count.
+            votes[candidate_name]=0
 
-    # initialize empty dictionaries
-    for candidate in candidate_options:
-        votes[candidate]=0
-        candidate_votes[candidate]={}
-    
-    # fill dictionaries
+            # create dictionary candidates for later use
+            candidate_votes[candidate_name]={}
+        
+        # Add a vote to that candidate's count
+        votes[candidate_name]+=1
+
+        # 4a: Write an if statement that checks that the county does not match any existing county in the county list.
+        if county_name not in counties:
+
+            # 4b: Add the existing county to the list of counties.            
+            counties.append(county_name)
+            
+            # 4c: Begin tracking the county's vote count.
+            votes[county_name]=0
+        
+        # 5: Add a vote to that county's vote count.
+        votes[county_name]+=1
+        
+
+    # embed new dictionaries
     for county in counties:
         # initialize county_votes by county
-        votes[county]=0
         for candidate in candidate_options:
             candidate_votes[candidate][county]=0
     
+    # re-start for detail count
     election_data.seek(0)
     next(reader)
 
@@ -83,8 +98,6 @@ with open(file_to_load) as election_data:
         candidate_name = row[2]
         # tally vote by county name and candidate
         candidate_votes[candidate_name][county_name]+=1
-        votes[county_name]+=1
-        votes[candidate_name]+=1
         
 # Save the results to our text file.
 with open(file_to_save, "w") as txt_file:
@@ -100,10 +113,15 @@ with open(file_to_save, "w") as txt_file:
 
     txt_file.write(election_results)
     
+    # 6a: Write a for loop to get the county from the county ~~dictionary~~ list. 
     for county in counties:
 
-        # Calculate the percentage of votes for the county.
-        vote_percentage = float(votes[county])/float(total_votes)*100
+        # 6b: Retrieve the county vote count.
+        ## unnecessary variable usage;
+        dummy_vote = votes.get(county)
+
+        # 6c: Calculate the percentage of votes for the county.
+        vote_percentage = float(dummy_vote)/float(total_votes)*100
         county_results = (
             f"{county}: {vote_percentage:.1f}% ({votes[county]:,})"
         )
@@ -129,7 +147,6 @@ with open(file_to_save, "w") as txt_file:
 
     # 8: Save the county with the largest turnout to a text file.
     txt_file.write(largest_county_summary)       
-
 
     # candidate breakdown
     for candidate in candidate_options:
