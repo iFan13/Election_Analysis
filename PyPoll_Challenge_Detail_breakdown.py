@@ -150,14 +150,17 @@ with open(file_to_save, "w") as txt_file:
 
     # candidate breakdown
     for candidate in candidate_options:
+        vote_percentage = float(votes[candidate]) / float(total_votes) * 100    
         candidate_breakdown = ""
-        
+
+        # new detail analysis section start
         for county in counties:
             candidate_by_county_perc = float(candidate_votes[candidate].get(county)/float(votes[county]))*100
             perc_of_votes_rec = (float(candidate_votes[candidate].get(county))/float(votes[candidate]))*100
             candidate_breakdown = (candidate_breakdown + f"\n       {county}- {candidate_votes[candidate].get(county):,}, {candidate_by_county_perc:.2f}% of county; {perc_of_votes_rec:.2f}% of votes received")
-            
-            vote_percentage = float(votes[candidate]) / float(total_votes) * 100
+        # new detail analysis section end
+   
+            # add detail analysis to candidate
             candidate_results = (
                 f"{candidate}: {vote_percentage:.1f}% total ({votes[candidate]:,} total){candidate_breakdown}\n")
         
