@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+PyPoll_Challenge_Detail_breakdown.py
