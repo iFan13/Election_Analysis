@@ -1,6 +1,7 @@
 # Election_Analysis
 
 ## Project Overview
+
 Tom and Seth of the Colorado Board of Elections has given the following tasks to be completed for an election audit of a recent local congressional election.
 
 1. Calculate the total number of votes cast.
